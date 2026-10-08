@@ -406,7 +406,13 @@ def _multipart_parts(content_type: str, body: bytes) -> list[bytes]:
     )
     if not message.is_multipart():
         raise ConfigMgrError("réponse multipart ConfigMgr invalide")
-    return [part.get_payload(decode=True) or b"" for part in message.iter_parts()]
+    parts: list[bytes] = []
+    for part in message.iter_parts():
+        payload = part.get_payload(decode=True)
+        if not isinstance(payload, bytes):
+            raise ConfigMgrError("partie MIME ConfigMgr non binaire ou multipart imbriqué")
+        parts.append(payload)
+    return parts
 
 
 def _policy_assignments(xml: str, management_point: str) -> list[tuple[str, str]]:

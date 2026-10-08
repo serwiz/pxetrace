@@ -14,6 +14,7 @@ from pxetrace.configmgr import (
     _cryptderivekey_material,
     _decrypt_cms,
     _media_ciphertext,
+    _multipart_parts,
     _policy_assignments,
     _urlopen,
     decrypt_media_variables,
@@ -21,6 +22,35 @@ from pxetrace.configmgr import (
     recover_blank_media_password,
     validate_variables_path,
 )
+
+
+def test_multipart_preserves_binary_payloads_and_empty_parts() -> None:
+    body = (
+        b'--test\r\nContent-Type: text/plain\r\n\r\nheader\r\n'
+        b'--test\r\nContent-Type: application/octet-stream\r\n'
+        b'Content-Transfer-Encoding: base64\r\n\r\nAAH/\r\n'
+        b'--test\r\nContent-Type: application/octet-stream\r\n\r\n\r\n'
+        b'--test--\r\n'
+    )
+    assert _multipart_parts('multipart/mixed; boundary=test', body) == [
+        b'header', b'\x00\x01\xff', b'',
+    ]
+
+
+def test_multipart_rejects_nested_messages_instead_of_silently_emptying_them() -> None:
+    body = (
+        b'--outer\r\nContent-Type: multipart/mixed; boundary=inner\r\n\r\n'
+        b'--inner\r\nContent-Type: text/plain\r\n\r\nnested\r\n'
+        b'--inner--\r\n--outer--\r\n'
+    )
+    with pytest.raises(ConfigMgrError, match='partie MIME ConfigMgr'):
+        _multipart_parts('multipart/mixed; boundary=outer', body)
+
+
+def test_multipart_rejects_non_multipart_response() -> None:
+    with pytest.raises(ConfigMgrError, match='réponse multipart ConfigMgr invalide'):
+        _multipart_parts('text/plain', b'not multipart')
+
 
 # Fixed synthetic vectors generated independently with PyCryptodome AES-256.
 # These are deliberately not regenerated with the production crypto functions:
