@@ -9,7 +9,7 @@ Linux, Python 3.11+. Sur Debian/Ubuntu :
 ```bash
 sudo apt install pipx git openssl wimtools p7zip-full
 pipx ensurepath
-pipx install 'git+https://github.com/VOTRE_COMPTE/pxetrace.git'
+pipx install 'git+https://github.com/serwiz/pxetrace.git'
 ```
 
 Remplacez l'URL par celle du dépôt. Si pipx vient d'être installé, ouvrez un nouveau terminal. Depuis un clone local : `pipx install .`.
