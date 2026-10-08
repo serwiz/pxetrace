@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pxetrace"
+version = "0.1.0"
+description = "Trace an IPv4 PXE boot chain without rebooting"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "pxetrace contributors"}]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.8", "mypy>=1"]
+
+[project.scripts]
+pxetrace = "pxetrace.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pxetrace*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
