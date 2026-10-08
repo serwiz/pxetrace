@@ -2,7 +2,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from pxetrace.configmgr import ConfigMgrDecryptionError, ConfigMgrPolicy, ConfigMgrPolicyResult, MediaVariables
+from pxetrace.configmgr import (
+    ConfigMgrDecryptionError,
+    ConfigMgrPolicy,
+    ConfigMgrPolicyResult,
+    MediaVariables,
+)
 from pxetrace.configmgr_inspect import ConfigMgrInspector
 from pxetrace.models import BootTarget
 from pxetrace.trace import Tracer

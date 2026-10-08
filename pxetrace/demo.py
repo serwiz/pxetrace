@@ -12,8 +12,13 @@ from pathlib import Path
 from typing import Any
 
 from .configmgr import (
-    _TSPXE_KEY, _cryptderivekey_material, _decrypt_cms, _run_openssl, _write_private,
-    decrypt_media_variables, expand_policy_payload,
+    _TSPXE_KEY,
+    _cryptderivekey_material,
+    _decrypt_cms,
+    _run_openssl,
+    _write_private,
+    decrypt_media_variables,
+    expand_policy_payload,
 )
 from .configmgr_report import media_inventory
 from .evidence import extract_credentials
@@ -64,7 +69,7 @@ def demo_summary() -> dict[str, Any]:
         if wimlib:
             image = directory / "boot.wim"
             subprocess.run([wimlib, "capture", str(directory / "files"), str(image), "--compress=none"],
-                           check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=60)
+                           check=True, capture_output=True, timeout=60)
         else:
             image = directory / "boot.zip"
             buffer = io.BytesIO()

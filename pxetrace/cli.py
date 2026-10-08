@@ -17,8 +17,6 @@ from .chain import ChainTracer
 from .configmgr import validate_variables_path
 from .configmgr_inspect import ConfigMgrInspector
 from .configmgr_report import write_configmgr_report
-from .image_audit import audit_images
-from .reports import save_reports
 from .dhcp import (
     ARCHITECTURES,
     DhcpClient,
@@ -28,18 +26,19 @@ from .dhcp import (
     firmware_uuid,
     format_mac,
     interface_active_mac,
-    interface_mac,
     interface_ipv4,
+    interface_mac,
     pxe_server_addresses,
     query_pxe_boot_server,
     query_wds_nbp,
     reply_as_dict,
     select_boot_offer,
 )
+from .image_audit import audit_images
 from .models import BootTarget, DhcpReply
+from .reports import save_reports
 from .trace import Tracer
-from .transfer import Fetcher, boot_uri
-from .transfer import resolve_reference
+from .transfer import Fetcher, boot_uri, resolve_reference
 
 
 def build_parser(*, show_advanced: bool = False) -> argparse.ArgumentParser:
@@ -404,10 +403,11 @@ def run(args: argparse.Namespace) -> int:
     for name in ("client_port", "server_port", "boot_server_port"):
         if not 1 <= getattr(args, name) <= 65535:
             raise ValueError(f"--{name.replace('_', '-')} doit être compris entre 1 et 65535")
-    if bool(args.server) != bool(args.boot_file):
-        # A full URL is self-contained and does not require --server.
-        if not (args.boot_file and urllib.parse.urlsplit(args.boot_file).scheme and not args.server):
-            raise ValueError("utilisez --server et --boot-file ensemble, ou fournissez une URL complète à --boot-file")
+    # A full URL is self-contained and does not require --server.
+    if bool(args.server) != bool(args.boot_file) and not (
+        args.boot_file and urllib.parse.urlsplit(args.boot_file).scheme and not args.server
+    ):
+        raise ValueError("utilisez --server et --boot-file ensemble, ou fournissez une URL complète à --boot-file")
 
     tracer = Tracer(verbose=args.verbose, compact=not args.quiet)
     report_path = args.report.resolve() if args.report else None

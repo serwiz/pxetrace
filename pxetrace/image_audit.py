@@ -7,14 +7,13 @@ import subprocess
 import tempfile
 import time
 import urllib.parse
+import xml.etree.ElementTree as ET
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass, field
 from pathlib import Path, PurePosixPath
-from typing import Iterable
-import xml.etree.ElementTree as ET
 
 from .evidence import inspect_credentials
 from .models import BootTarget
-
 
 _NAMES = {"bootstrap.ini", "customsettings.ini", "unattend.xml", "autounattend.xml",
           "sysprep.inf", "sysprep.xml", "credentials.xml", "variables.dat", "smsts.ini",

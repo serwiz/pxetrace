@@ -56,4 +56,6 @@ La recherche cible les configurations de déploiement, pas toutes les chaînes d
 
 Pour en savoir plus sur les échanges DHCP, le démarrage UEFI et ConfigMgr : [EXPLANATION.md](EXPLANATION.md).
 
+Pour savoir quoi vérifier et comment protéger le déploiement : [guide d'audit et bonnes pratiques](AUDIT.md).
+
 Les PR et retours de terrain sont les bienvenus. Merci de ne pas joindre de captures contenant des secrets. Licence [MIT](LICENSE).

@@ -3,17 +3,17 @@ from __future__ import annotations
 import shutil
 import struct
 import subprocess
-import zlib
 import urllib.request
+import zlib
 
 import pytest
 
 from pxetrace.configmgr import (
-    ConfigMgrError,
     ConfigMgrDecryptionError,
+    ConfigMgrError,
     _cryptderivekey_material,
-    _media_ciphertext,
     _decrypt_cms,
+    _media_ciphertext,
     _policy_assignments,
     _urlopen,
     decrypt_media_variables,
@@ -21,7 +21,6 @@ from pxetrace.configmgr import (
     recover_blank_media_password,
     validate_variables_path,
 )
-
 
 # Fixed synthetic vectors generated independently with PyCryptodome AES-256.
 # These are deliberately not regenerated with the production crypto functions:

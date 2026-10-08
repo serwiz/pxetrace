@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
 import struct
+from pathlib import Path
+from typing import ClassVar
 
 from pxetrace.chain import (
     ChainTracer,
@@ -14,7 +15,15 @@ from pxetrace.chain import (
 )
 from pxetrace.models import BootTarget
 from pxetrace.trace import Tracer
-from pxetrace.transfer import Fetcher, FetchResult, TftpClient, _tftp_ack, _tftp_request, boot_uri, resolve_reference
+from pxetrace.transfer import (
+    Fetcher,
+    FetchResult,
+    TftpClient,
+    _tftp_ack,
+    _tftp_request,
+    boot_uri,
+    resolve_reference,
+)
 
 
 def test_ipxe_parser_resolves_relative_paths_and_known_variables() -> None:
@@ -122,7 +131,7 @@ def test_tftp_oack_and_multiblock_transfer(monkeypatch, tmp_path: Path) -> None:
     peer = ("192.0.2.10", 49152)
 
     class FakeSocket:
-        sent: list[tuple[bytes, tuple[str, int]]] = []
+        sent: ClassVar[list[tuple[bytes, tuple[str, int]]]] = []
 
         def __init__(self, *_args, **_kwargs) -> None:
             self.responses = [

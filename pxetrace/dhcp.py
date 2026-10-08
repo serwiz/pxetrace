@@ -8,9 +8,9 @@ import socket
 import struct
 import time
 import uuid
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 from .models import DhcpReply
 from .trace import Tracer
@@ -967,7 +967,7 @@ def query_pxe_boot_server(
             sock.sendto(packet, (server, boot_server_port))
             try:
                 data, source = sock.recvfrom(65535)
-            except socket.timeout:
+            except TimeoutError:
                 tracer.emit(
                     "pxe.retry",
                     "aucune réponse du Boot Server, retransmission",
@@ -1060,7 +1060,7 @@ def query_wds_nbp(
             sock.sendto(packet, (server_ip, boot_server_port))
             try:
                 data, source = sock.recvfrom(65535)
-            except socket.timeout:
+            except TimeoutError:
                 if attempt == 1 or attempt % 5 == 0:
                     tracer.emit(
                         "wds.retry",

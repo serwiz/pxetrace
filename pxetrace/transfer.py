@@ -96,8 +96,7 @@ class TftpClient:
         filename = urllib.parse.unquote(filename).replace("\\", "/")
         # The first slash is the URI path delimiter. A doubled slash retains
         # one leading slash in the opaque TFTP filename.
-        if filename.startswith("/"):
-            filename = filename[1:]
+        filename = filename.removeprefix("/")
         if not filename:
             raise TftpError("nom de fichier TFTP vide")
         if "\0" in filename:
@@ -140,7 +139,7 @@ class TftpClient:
                 while True:
                     try:
                         packet, source = sock.recvfrom(65535)
-                    except socket.timeout:
+                    except TimeoutError:
                         failures += 1
                         if failures > self.retries:
                             raise TftpError(

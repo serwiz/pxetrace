@@ -1,10 +1,9 @@
 """Build a source-only archive; never recursively include the workspace."""
-from pathlib import Path
 import tarfile
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-FIXED = ('README.md', 'EXPLANATION.md', 'LICENSE', 'pyproject.toml', '.gitignore',
+FIXED = ('README.md', 'EXPLANATION.md', 'AUDIT.md', 'LICENSE', 'pyproject.toml', '.gitignore',
          'tools/package_source.py', '.github/workflows/tests.yml')
 
 

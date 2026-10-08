@@ -13,7 +13,7 @@ authors = [{name = "pxetrace contributors"}]
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "ruff>=0.8", "mypy>=1"]
+dev = ["pytest>=7", "ruff==0.14.14", "mypy>=1"]
 
 [project.scripts]
 pxetrace = "pxetrace.cli:main"
@@ -24,3 +24,13 @@ include = ["pxetrace*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+
+[tool.ruff]
+target-version = "py311"
+required-version = "==0.14.14"
+
+[tool.ruff.lint]
+# Keep the checks reported by CI explicit, including the preview-only ISC004.
+preview = true
+explicit-preview-rules = true
+select = ["E4", "E7", "E9", "F", "I", "UP", "SIM102", "SIM114", "ISC004", "PIE810", "FURB188", "RUF012"]

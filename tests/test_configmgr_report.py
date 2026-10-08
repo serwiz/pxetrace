@@ -9,7 +9,12 @@ from pxetrace.audit import AuditFinding
 from pxetrace.cli import _summary_text
 from pxetrace.configmgr import ConfigMgrPolicy, ConfigMgrPolicyResult, MediaVariables
 from pxetrace.configmgr_inspect import ConfigMgrInspector
-from pxetrace.configmgr_report import media_inventory, public_media_metadata, render_configmgr_report, write_configmgr_report
+from pxetrace.configmgr_report import (
+    media_inventory,
+    public_media_metadata,
+    render_configmgr_report,
+    write_configmgr_report,
+)
 from pxetrace.models import BootTarget
 from pxetrace.trace import Tracer
 

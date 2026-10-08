@@ -12,7 +12,6 @@ from uuid import uuid4
 
 from .configmgr import MediaVariables, _write_private
 
-
 _CONFIG_FIELDS = {
     "_smstsbootmediapackageid": (r"[A-Za-z0-9]{8}", "Package de l'image de démarrage"),
     "_smstssitecode": (r"[A-Za-z0-9]{3}", "Code du site ConfigMgr"),
@@ -121,8 +120,10 @@ def render_configmgr_report(
     lines = [
         _paint("Contrôle de sécurité ConfigMgr", "1;36", color),
         f"  Couverture : {_paint(coverage, '1;32' if coverage.startswith('complète') else '1;33', color)}",
-        f"  Alertes : {_paint(len(findings), '1;31' if findings else '1;32', color)}; "
-        f"limites/erreurs : {_paint(len(incomplete), '1;33' if incomplete else '1;32', color)}",
+        (
+            f"  Alertes : {_paint(len(findings), '1;31' if findings else '1;32', color)}; "
+            f"limites/erreurs : {_paint(len(incomplete), '1;33' if incomplete else '1;32', color)}"
+        ),
         f"  Variables : {_paint(variable_state, '1;32' if result.get('variables_decrypted') else '1;31', color)}",
         (
             f"  Stratégies analysées : {_paint(result.get('policies_downloaded', 0), '1;32', color)}"

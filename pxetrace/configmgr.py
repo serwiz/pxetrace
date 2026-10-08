@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import hashlib
 import base64
 import binascii
+import hashlib
 import os
 import re
 import shutil
@@ -15,15 +15,15 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+import zlib
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from email import policy
 from email.message import EmailMessage
 from email.parser import BytesParser
 from pathlib import Path
-from uuid import uuid4
 from typing import cast
-import zlib
+from uuid import uuid4
 
 
 class ConfigMgrError(RuntimeError):

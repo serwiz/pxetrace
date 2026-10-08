@@ -37,9 +37,7 @@ class Tracer:
                 }
                 suffix = " " + " ".join(f"{key}={value!r}" for key, value in display_details.items())
             print(f"[{event.elapsed_ms:>6} ms] {level.upper():7} {phase}: {message}{suffix}", file=self.stream)
-        elif self.compact and (level in {"warning", "error"} or phase in _COMPACT_PHASES):
-            print(_compact_line(phase, message, level, details, color=self.color), file=self.stream)
-        elif level in {"warning", "error"}:
+        elif level in {"warning", "error"} or (self.compact and phase in _COMPACT_PHASES):
             print(_compact_line(phase, message, level, details, color=self.color), file=self.stream)
 
     def write_json(self, path: Path, *, summary: dict[str, Any]) -> None:
@@ -248,7 +246,7 @@ def _compact_line(
             text = message
             if details.get("reason"):
                 text += f": {details.get('reason')}"
-        if phase.startswith("dhcp.") or phase.startswith("tftp.") or phase.startswith("fetch."):
+        if phase.startswith(("dhcp.", "tftp.", "fetch.")):
             child = True
 
     prefix = f"[{label}]"

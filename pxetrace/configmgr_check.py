@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 import tempfile
-import os
 from pathlib import Path
 
 from .cli import _apply_autopilot_defaults, _make_identity, build_parser

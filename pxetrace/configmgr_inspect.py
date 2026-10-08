@@ -3,17 +3,26 @@ from __future__ import annotations
 import hashlib
 import subprocess
 import urllib.parse
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Iterable
 
 from .audit import AuditFinding, scan_bytes
-from .configmgr import ConfigMgrDecryptionError, ConfigMgrError, audit_management_point, decrypt_media_variables
-from .configmgr_report import endpoint, media_inventory, public_media_metadata, public_text
-from .models import BootTarget
+from .configmgr import (
+    ConfigMgrDecryptionError,
+    ConfigMgrError,
+    audit_management_point,
+    decrypt_media_variables,
+)
+from .configmgr_report import (
+    endpoint,
+    media_inventory,
+    public_media_metadata,
+    public_text,
+)
 from .evidence import extract_credentials, text_content
+from .models import BootTarget
 from .trace import Tracer
-
 
 _MAX_VARIABLES_BYTES = 16 * 1024 * 1024
 

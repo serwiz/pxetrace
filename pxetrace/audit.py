@@ -8,14 +8,18 @@ import subprocess
 import tempfile
 import urllib.parse
 import xml.etree.ElementTree as ET
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass, field
 from pathlib import Path, PurePosixPath
-from typing import Iterable
 
-from .configmgr import ConfigMgrError, MediaVariables, audit_management_point, decrypt_media_variables
+from .configmgr import (
+    ConfigMgrError,
+    MediaVariables,
+    audit_management_point,
+    decrypt_media_variables,
+)
 from .models import BootTarget
 from .trace import Tracer
-
 
 _TEXT_SUFFIXES = {
     ".bat",

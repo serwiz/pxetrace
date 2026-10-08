@@ -7,8 +7,8 @@ import uuid
 import pytest
 
 from pxetrace.dhcp import (
-    DHCP_OFFER,
     DHCP_ACK,
+    DHCP_OFFER,
     DhcpError,
     DhcpIdentity,
     build_packet,
@@ -16,17 +16,16 @@ from pxetrace.dhcp import (
     decode_configmgr_boot_variables,
     decode_options,
     decode_wds_nbp_options,
-    encode_options,
-    parse_reply,
-    select_boot_offer,
     describe_option,
-    pxe_server_addresses,
-    internet_checksum,
+    encode_options,
     interface_mac,
+    internet_checksum,
+    parse_reply,
+    pxe_server_addresses,
     raw_udp_broadcast,
     reply_has_pxe_service,
+    select_boot_offer,
 )
-
 
 MAC = bytes.fromhex("001122334455")
 
